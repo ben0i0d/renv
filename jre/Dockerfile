@@ -1,5 +1,5 @@
-FROM ben0i0d/gameserver:base 
+FROM eoelab.org:1027/ben0i0d/renv:base 
 
 USER root
 
-RUN apt-get update --yes && apt-get install --yes defalt-jre-headless
+RUN apt-get update --yes && apt-get install --yes --no-install-recommends defalt-jre-headless

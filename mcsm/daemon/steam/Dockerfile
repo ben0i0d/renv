@@ -1,4 +1,4 @@
-FROM ben0i0d/gameserver:base AS builder
+FROM eoelab.org:1027/ben0i0d/renvn0i0d/renvn0i0d/renv:base AS builder
 
 USER root
 
@@ -13,7 +13,7 @@ RUN apt-get update --yes && apt-get install --yes wget xz-utils && apt-get clean
     tar -xvf node-v20.11.0-linux-x64.tar.xz && rm node-v20.11.0-linux-x64.tar.xz && \
     cd mcsm && tar -zxf mcsmanager_linux_release.tar.gz && rm mcsmanager_linux_release.tar.gz
 
-FROM ben0i0d/gameserver:base
+FROM eoelab.org:1027/ben0i0d/renvn0i0d/renvn0i0d/renv:base
 
 EXPOSE 24445
 

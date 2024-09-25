@@ -1,10 +1,9 @@
-FROM ben0i0d/gameserver:base AS builder
+FROM eoelab.org:1027/ben0i0d/renvAS builder
 
 USER root
 
 WORKDIR /opt
 
-COPY mcsmanager_linux_release.tar.gz /opt/mcsm/
 # Download Java
 # Download Node.js
 # Download MCSManager
@@ -17,7 +16,7 @@ RUN apt-get update --yes && apt-get install --yes xz-utils gnupg curl wget && \
     tar -xvf node-v20.11.0-linux-x64.tar.xz && rm node-v20.11.0-linux-x64.tar.xz && \
     cd mcsm && tar -zxf mcsmanager_linux_release.tar.gz && rm mcsmanager_linux_release.tar.gz
 
-FROM ben0i0d/gameserver:base
+FROM eoelab.org:1027/ben0i0d/renv:base
 
 EXPOSE 24444
 

@@ -1,4 +1,4 @@
-FROM ben0i0d/gameserver:base
+FROM eoelab.org:1027/ben0i0d/renv:base
 
 RUN sed -i 's/main/main contrib non-free non-free-firmware/g' /etc/apt/sources.list.d/debian.sources &&\
     echo steam steam/question select "I AGREE" | debconf-set-selections &&\
