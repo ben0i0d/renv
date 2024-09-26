@@ -82,6 +82,7 @@ jobs:
       - name: login dockerhub
         uses: https://eoelab.org:1027/actions/login-action@v3
         with:
+          registry: docker.io
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWD }}
 
