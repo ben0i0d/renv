@@ -1,0 +1,99 @@
+name: Build
+
+on: [push]
+
+jobs:
+  Base:
+    runs-on: runner
+    steps:
+      - name: checkout code
+        uses: https://eoelab.org:1027/actions/checkout@v4
+      - name: base build
+        uses: https://eoelab.org:1027/actions/build-push-action@v6
+        with:
+          context: base
+          tags: eoelab.org:1027/${{ gitea.repository }}:base
+  JRE:
+    runs-on: runner
+    needs: Base
+    steps:
+      - name: checkout code
+        uses: https://eoelab.org:1027/actions/checkout@v4
+      - name: jre build
+        uses: https://eoelab.org:1027/actions/build-push-action@v6
+        with:
+          context: jre
+          tags: eoelab.org:1027/${{ gitea.repository }}:jre
+
+  MC_JRE_8:
+    runs-on: runner
+    needs: Base
+    steps:
+      - name: checkout code
+        uses: https://eoelab.org:1027/actions/checkout@v4
+      - name: mc_jre_8 build
+        uses: https://eoelab.org:1027/actions/build-push-action@v6
+        with:
+          context: mc_jre/8
+          tags: eoelab.org:1027/${{ gitea.repository }}:mc_jre_8
+
+  MC_JRE_11:
+    runs-on: runner
+    needs: Base
+    steps:
+      - name: checkout code
+        uses: https://eoelab.org:1027/actions/checkout@v4
+      - name: mc_jre_11 build
+        uses: https://eoelab.org:1027/actions/build-push-action@v6
+        with:
+          context: mc_jre/11
+          tags: eoelab.org:1027/${{ gitea.repository }}:mc_jre_11
+
+  MC_JRE_17:
+    runs-on: runner
+    needs: Base
+    steps:
+      - name: checkout code
+        uses: https://eoelab.org:1027/actions/checkout@v4
+      - name: mc_jre_17 build
+        uses: https://eoelab.org:1027/actions/build-push-action@v6
+        with:
+          context: mc_jre/17
+          tags: eoelab.org:1027/${{ gitea.repository }}:mc_jre_17
+
+  MC_JRE_21:
+    runs-on: runner
+    needs: Base
+    steps:
+      - name: checkout code
+        uses: https://eoelab.org:1027/actions/checkout@v4
+      - name: mc_jre_21 build
+        uses: https://eoelab.org:1027/actions/build-push-action@v6
+        with:
+          context: mc_jre/21
+          tags: eoelab.org:1027/${{ gitea.repository }}:mc_jre_21
+
+  Steam:
+    runs-on: runner
+    needs: Base
+    steps:
+      - name: checkout code
+        uses: https://eoelab.org:1027/actions/checkout@v4
+      - name: steam build
+        uses: https://eoelab.org:1027/actions/build-push-action@v6
+        with:
+          context: steam
+          tags: eoelab.org:1027/${{ gitea.repository }}:steam
+
+  Push:
+    runs-on: runner
+    needs: [JRE, MC_JRE_8, MC_JRE_11, MC_JRE_17, MC_JRE_21, Steam]
+    steps:
+      - name: login gitea_registry
+        uses: https://eoelab.org:1027/actions/login-action@v3
+        with:
+          registry: eoelab.org:1027
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWD }}
+      - name: push images to gitea_registry
+        run: docker image push "eoelab.org:1027/${{ gitea.repository }}" --all-tags
