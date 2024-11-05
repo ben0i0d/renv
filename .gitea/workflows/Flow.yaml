@@ -88,9 +88,21 @@ jobs:
             https_proxy=http://192.168.2.2:7890
           tags: eoelab.org:1027/${{ gitea.repository }}:steam
 
+  Steam_Wine:
+    runs-on: runner
+    needs: Base
+    steps:
+      - name: checkout code
+        uses: https://eoelab.org:1027/actions/checkout@v4
+      - name: steam_wine build
+        uses: https://eoelab.org:1027/actions/build-push-action@v6
+        with:
+          context: steam_wine
+          tags: eoelab.org:1027/${{ gitea.repository }}:steam_wine
+
   Push:
     runs-on: runner
-    needs: [JRE, MC_JRE_8, MC_JRE_11, MC_JRE_17, MC_JRE_21, Steam]
+    needs: [Steam_Wine]
     steps:
       - name: login gitea_registry
         uses: https://eoelab.org:1027/actions/login-action@v3
